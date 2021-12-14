@@ -51,7 +51,9 @@ function showTime($timestamp,$format = "h:i (y-m-d)"){
 function contactAdd(){
     $name = textFilter($_POST['name']);
     $phone = textFilter($_POST['phone']);
-    $sql = "INSERT INTO contacts (name,phone) VALUES ('$name','$phone')";
+    $saveFolder = "store/";
+    $photo = $saveFolder.$_FILES['photo']['name'];
+    $sql = "INSERT INTO contacts (photo,name,phone) VALUES ('$photo','$name','$phone')";
 //    die($sql);
     if  (runQuery($sql)){
         linkTo('contact_add.php');
@@ -69,6 +71,10 @@ function contacts(){
 }
 
 function contactDelete($id){
+    $sql = "SELECT * FROM contacts WHERE id = '$id'";
+    $query = mysqli_query(con(),$sql);
+    $row = mysqli_fetch_assoc($query);
+    unlink($row['photo']);
     $sql = "DELETE FROM contacts WHERE id = $id";
     return runQuery($sql);
 }
@@ -77,7 +83,9 @@ function contactEdit(){
     $id = $_POST['id'];
     $name = $_POST['name'];
     $phone = $_POST['phone'];
-    $sql = "UPDATE contacts SET name = '$name',phone = '$phone' WHERE id = $id";
+    $saveFolder = "store/";
+    $photo = $saveFolder.$_FILES['photo']['name'];
+    $sql = "UPDATE contacts SET name = '$name',phone = '$phone',photo='$photo' WHERE id = $id";
     return runQuery($sql);
 }
 
@@ -116,6 +124,7 @@ function cleanError(){
 function request($functionName,$location = ""){
 
     $errorStatus = 0;
+    $photo = "";
     $name = "";
     $phone = "";
 
@@ -132,7 +141,7 @@ function request($functionName,$location = ""){
                 $errorStatus = 1;
             }else{
                 if (!preg_match("/^[a-zA-Z-' ]*$/",$_POST['name'])) {
-                    setError('name', "Only letters and white space allowed.");
+                    setError('name', "Only letters and space allowed.");
                     $errorStatus = 1;
                 }else{
                     $name = textFilter($_POST['name']);
@@ -153,10 +162,28 @@ function request($functionName,$location = ""){
         }
     }
 
+    $supportFileType = ['image/jpeg','image/png'];
+
+    if(empty($_FILES['photo']['name'])) {
+        setError('photo',"Profile is required.");
+        $errorStatus = 1;
+    }else{
+        $tempFile = $_FILES['photo']['tmp_name'];
+        $fileName = $_FILES['photo']['name'];
+        if (in_array($_FILES['photo']['type'], $supportFileType)) {
+            $saveFolder = "store/";
+            move_uploaded_file($tempFile,$saveFolder.$fileName);
+        } else {
+            setError("photo", "File is invalid.");
+            $errorStatus = 1;
+        }
+    }
+
     if (!$errorStatus){
         $functionName();
         redirect($location);
         setSuccess('submit','Contact added completely.');
+
     }
 
 }

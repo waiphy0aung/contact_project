@@ -16,6 +16,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Profile</th>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Control</th>
@@ -29,6 +30,12 @@
 
                     <tr>
                         <td><?php echo $i++; ?></td>
+                        <td>
+                            <img src="<?php echo $url; ?>/<?php echo $c['photo']; ?>"
+                                 class="border rounded-circle" style="width: 40px;"
+                                 alt=""
+                            >
+                        </td>
                         <td><?php echo $c['name']; ?></td>
                         <td><?php echo $c['phone']; ?></td>
                         <td>
@@ -41,7 +48,7 @@
                                 <i class="feather-edit-2"></i>
                             </a>
                         </td>
-                        <td><?php echo showTime($c['created_at']); ?></td>
+                        <td class="nowrap"><?php echo showTime($c['created_at']); ?></td>
                     </tr>
 
                 <?php }; ?>

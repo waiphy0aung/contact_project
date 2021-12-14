@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 12, 2021 at 08:54 PM
+-- Generation Time: Dec 14, 2021 at 11:51 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `contacts` (
   `id` int(11) NOT NULL,
+  `photo` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'default.png',
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -38,18 +39,14 @@ CREATE TABLE `contacts` (
 -- Dumping data for table `contacts`
 --
 
-INSERT INTO `contacts` (`id`, `name`, `phone`, `created_at`) VALUES
-(1, 'Wai Phyo Aung', '09765467545', '2021-12-11 17:57:53'),
-(2, 'mg mg', '09474635374', '2021-12-11 15:42:33'),
-(3, 'ko ko', '95786378546', '2021-12-11 15:42:43'),
-(4, 'aye aye', '09764763754', '2021-12-11 17:53:32'),
-(5, 'htoo htoo', '09746437364', '2021-12-11 17:53:44'),
-(9, 'zaw zaw', '09736475386', '2021-12-11 17:57:15'),
-(10, 'kyaw gyi', '0925324562', '2021-12-11 18:00:54'),
-(11, 'soe soe', '09635473642', '2021-12-12 16:27:55'),
-(12, 'tun tun', '09735463728', '2021-12-12 16:40:40'),
-(13, 'thiri', '09847356473', '2021-12-12 16:44:24'),
-(29, 'Bo Bo', '09864736253', '2021-12-12 19:38:50');
+INSERT INTO `contacts` (`id`, `photo`, `name`, `phone`, `created_at`) VALUES
+(34, 'store/avatar2.jpg', 'aye aye', '09735463728', '2021-12-13 10:49:29'),
+(35, 'store/avatar4.jpg', 'tun tun', '09635473642', '2021-12-14 08:40:41'),
+(36, 'store/avatar3.jpg', 'mg mg', '09654764334', '2021-12-14 08:41:59'),
+(37, 'store/avatar1.jpg', 'thiri', '09264426473', '2021-12-14 08:42:59'),
+(38, 'store/avatar5.jpg', 'kyaw kyaw', '09274546735', '2021-12-14 08:44:37'),
+(39, 'store/avatar8.jpg', 'zaw zaw', '09450936473', '2021-12-14 08:54:54'),
+(40, 'store/myprofile.jpg', 'Wai Phyo Aung', '09777605370', '2021-12-14 08:56:11');
 
 --
 -- Indexes for dumped tables
@@ -69,7 +66,7 @@ ALTER TABLE `contacts`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
